@@ -5,29 +5,15 @@ const flipY = merge(flipInY, zoomIn);
 
 const slideInRightAnimation = keyframes`${flipY}`;
 
-const ItemContainers = styled.div`
+export const ItemContainers = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   outline: none;
-  animation: ${({ theme: { animationDuration } }) =>
-    `${animationDuration} ${slideInRightAnimation} forwards`}; 
-`;
-
-export const getRangeItemContainer = (selected: boolean) => ItemContainers.extend`
-  background-color: ${({ theme: { bgSelected, bgPrimary } }) =>
-    selected ? bgSelected : bgPrimary};
-  flex-direction: column;
-  width: ${({ theme: { rangeWidth } }) => rangeWidth};
-  height: ${({ theme: { rangeHeight } }) => rangeHeight};
-`;
-
-export const getSingleItemContainer = (selected: boolean) => ItemContainers.extend`
-  background-color: ${({ theme: { bgSelected, bgPrimary } }) =>
-    selected ? bgSelected : bgPrimary};
-  flex-direction: row;
   width: ${({ theme: { singleWidth } }) => singleWidth};
   height: ${({ theme: { singleHeight } }) => singleHeight};
+  animation: ${({ theme: { animationDuration } }) =>
+    `${animationDuration} ${slideInRightAnimation} forwards`};
 `;
 
 ItemContainers.defaultProps = {

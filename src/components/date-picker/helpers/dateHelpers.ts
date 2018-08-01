@@ -1,7 +1,14 @@
 import { Moment } from "moment";
 
-export const getRangeDates = (currentDate: Moment, range: number, disabledDays: Moment[]) => {
-  const dataRanges = [];
+export interface IDataRange {
+  dayOfWeek: string;
+  date: string;
+  isToday: boolean;
+  isDisabled: boolean;
+}
+
+export const getRangeDates = (currentDate: Moment, range: number, disabledDays: Moment[]): IDataRange[] => {
+  const dataRanges: IDataRange[] = [];
 
   for (let i = -range; i <= range; i++) {
     const nextDate = currentDate.clone().add(i, "d");
@@ -17,7 +24,7 @@ export const getRangeDates = (currentDate: Moment, range: number, disabledDays: 
   return dataRanges;
 };
 
-export const isSameDay = (first: Moment, second: Moment) => {
+export const isSameDay = (first: Moment, second: Moment): boolean => {
   return (
     first.isSame(second, "year") &&
     first.isSame(second, "month") &&

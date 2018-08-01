@@ -8,9 +8,17 @@ import SelectorContainer from "./styled/SelectorContainer";
 import DayContainer from "./containers/DayContainer";
 import MonthContainer from "./containers/MonthContainer";
 import YearContainer from "./containers/YearContainer";
+import { Moment } from 'moment';
 
-const changeInterval = withStateHandlers(
-  ({ range, value }) => ({ currentDate: value }),
+interface IInitState {
+  value,
+  onChange,
+  disabled,
+  disabledDays,
+};
+
+const changeInterval = withStateHandlers<IInitState, {}, IInitState & { currentDate}>(
+  (state) => ({...state, currentDate: state.value }),
   {
     changeInterval: ({ currentDate }, { onChange }) => (count, type) => {
       const newDate = currentDate.clone().add(count, type);
@@ -21,7 +29,7 @@ const changeInterval = withStateHandlers(
         currentDate: newDate
       };
     }
-  }
+},
 );
 
 const dayClickHandlers = withHandlers({
@@ -51,15 +59,20 @@ const yearClickHandlers = withHandlers({
   }
 });
 
-const enhance = compose(
+const enhance = compose<IDateIntervalSelectorProps, IInitState>(
   changeInterval,
   dayClickHandlers,
   monthClickHandlers,
   yearClickHandlers
 );
 
-const DateIntervalSelector = ({
-  value,
+export interface  IDateIntervalSelectorState {
+    range: any;
+    value: Moment;
+    disabledDays: Moment[];
+}
+
+export interface IDateIntervalSelectorProps {
   currentDate,
   prevDayClickHandler,
   nextDayClickHandler,
@@ -68,36 +81,52 @@ const DateIntervalSelector = ({
   prevYearClickHandler,
   nextYearClickHandler,
   disabled,
-  disabledDays
-}) => (
-  <ThemeProvider theme={primaryTheme}>
-    <Fragment>
-      <SelectorContainer>
-        <MonthContainer
-          value={currentDate}
-          prevClickHandler={prevMonthClickHandler}
-          nextClickHandler={nextMonthClickHandler}
-          disabled={disabled}
-        />
-        <YearContainer
-          value={currentDate}
-          prevClickHandler={prevYearClickHandler}
-          nextClickHandler={nextYearClickHandler}
-          disabled={disabled}
-        />
-      </SelectorContainer>
-      <SelectorContainer>
-        <DayContainer
-          prevClickHandler={prevDayClickHandler}
-          nextClickHandler={nextDayClickHandler}
-          value={currentDate}
-          range={3}
-          disabled={disabled}
-          disabledDays={disabledDays}
-        />
-      </SelectorContainer>
-    </Fragment>
-  </ThemeProvider>
-);
+  children?,
+  disabledDays   
+}
+
+const DateIntervalSelector = (props: IDateIntervalSelectorProps) => {
+    const {
+      currentDate,
+      prevDayClickHandler,
+      nextDayClickHandler,
+      prevMonthClickHandler,
+      nextMonthClickHandler,
+      prevYearClickHandler,
+      nextYearClickHandler,
+      disabled,
+      disabledDays,
+    } = props;
+
+    return(
+        <ThemeProvider theme={primaryTheme}>
+          <Fragment>
+            <SelectorContainer>
+              <MonthContainer
+                value={currentDate}
+                prevClickHandler={prevMonthClickHandler}
+                nextClickHandler={nextMonthClickHandler}
+                disabled={disabled}
+              />
+              <YearContainer
+                value={currentDate}
+                prevClickHandler={prevYearClickHandler}
+                nextClickHandler={nextYearClickHandler}
+                disabled={disabled}
+              />
+            </SelectorContainer>
+            <SelectorContainer>
+              <DayContainer
+                prevClickHandler={prevDayClickHandler}
+                nextClickHandler={nextDayClickHandler}
+                value={currentDate}
+                range={3}
+                disabled={disabled}
+                disabledDays={disabledDays}
+              />
+            </SelectorContainer>
+          </Fragment>
+        </ThemeProvider>
+)};
 
 export default enhance(DateIntervalSelector);

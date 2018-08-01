@@ -1,13 +1,27 @@
 import { mapProps, compose } from "recompose";
-import { getRangeDates } from "../helpers/dateHelpers";
+import { getRangeDates, IDataRange } from "../helpers/dateHelpers";
 
 import DateRangeSelector from "../components/DateRangeSelector";
+import { IDateIntervalSelectorState } from "..";
 
-const rangeValues = mapProps(props => ({
+interface IDayContainerProps {
+  values,
+  prevClickHandler,
+  nextClickHandler,
+  disabled,
+  ranger,
+};
+
+interface IContainer {
+  range: any;
+  value: IDataRange[];
+}
+
+const rangeValues = mapProps<any, any>(props => ({
   ...props,
   values: getRangeDates(props.value, props.range, props.disabledDays)
 }));
 
-const enhance = compose(rangeValues);
+const enhance = compose<any, any>(rangeValues);
 
 export default enhance(DateRangeSelector);

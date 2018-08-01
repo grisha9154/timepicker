@@ -1,7 +1,11 @@
 import * as React from "react";
 import ArrowButton from "./ArrowButton";
-import { getSingleItemContainer } from "../styled/ItemContainers";
+import { ItemContainers } from "../styled/ItemContainers";
 import ItemWrapper from "../styled/RangeItemWrapper";
+
+const getSingleItemContainer = (selected: boolean) => ItemContainers.extend`
+  flex-direction: row;
+`;
 
 const DataSingleSelector = ({
   value,

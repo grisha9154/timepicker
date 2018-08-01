@@ -1,6 +1,7 @@
 import * as React from "react";
-import {getButton, ButtonTheme }from "../styled/Button";
+import { ButtonTheme }from "../styled/Button";
 import { Moment } from "moment";
+import styled from "styled-components";
 
 interface ArrowButtonProps {
   text: string,
@@ -8,6 +9,15 @@ interface ArrowButtonProps {
   small?: boolean,
   disabled: boolean
 };
+
+const getButton = (small: boolean, disabled: boolean) => styled.button`
+  width: ${ButtonTheme.width}
+  border: none;
+  outline: none;
+  height: ${small ? ButtonTheme.singleHeight : ButtonTheme.rangeHeight};
+  background-color: ${ButtonTheme.colorArrow};
+  color: ${disabled ? ButtonTheme.colorArrow : ButtonTheme.colorArrowDisabled};
+`;
 
 const ArrowButton = (props: ArrowButtonProps) => {
   const {
