@@ -1,0 +1,26 @@
+{
+  "name": "timepicker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/react": "^16.4.7",
+    "@types/react-dom": "^16.0.6",
+    "moment": "^2.22.2",
+    "react": "^16.4.1",
+    "react-animations": "^1.0.0",
+    "react-dom": "^16.4.1",
+    "recompose": "^0.28.0",
+    "styled-components": "^3.3.3"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.0",
+    "source-map-loader": "^0.2.3",
+    "typescript": "^3.0.1"
+  }
+}
